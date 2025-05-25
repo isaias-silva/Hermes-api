@@ -1,7 +1,15 @@
 import { Elysia } from "elysia";
+import {JobPlugin} from "./plugins/JobPlugin";
+import { LoggerPlugin } from "./plugins/LoggerPlugin";
+import { ErrorPlugin } from "./plugins/ErrorPlugin";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+const port = 8080
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+const app = new Elysia()
+app.use(ErrorPlugin)
+app.use(LoggerPlugin)
+
+
+app.use(JobPlugin)
+
+app.listen(port, () => console.log(`[global] api running in ${app.server?.hostname}:${app.server?.port}`));
