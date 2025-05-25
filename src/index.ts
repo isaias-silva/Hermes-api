@@ -1,10 +1,7 @@
-import express from 'express'
+import { Elysia } from "elysia";
 
-const app = express()
-const port = 3000
+const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
 
-
-
-
-
-app.listen(port, () => console.log(`app running in port ${port}`))
+console.log(
+  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+);
