@@ -1,0 +1,37 @@
+services:
+  db:
+    image: mongo:4.4
+    restart: always
+    hostname: hermes.db
+
+    volumes:
+      - ./db:/data/db
+      
+    ports:
+      - "27017:27017"
+
+    networks:
+      - hermes.network
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+
+  queues-dev:
+    image: rabbitmq:management
+    restart: always
+    hostname: hermes.queue.dev
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${MQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${MQ_PASS}
+    networks:
+      - hermes.network
+
+networks:
+  hermes.network:
+    driver: bridge
