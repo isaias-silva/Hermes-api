@@ -6,8 +6,8 @@ import { UpdateJobDto } from "../dtos/UpdateJobDto";
 
 const jobController = new JobController()
 export const JobPlugin = new Elysia({ prefix: jobController.path })
+.decorate('jobService', new JobService)
 
-    .decorate('jobService', new JobService)
 
 JobPlugin.get("/", jobController.get, {
     query: t.Object({

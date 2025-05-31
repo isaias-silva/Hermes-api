@@ -1,18 +1,20 @@
+import { IJob } from "../interfaces/IJob";
+
 export class JobService {
 
     getJob(_id: string, user: string) {
 
     }
-    getMyJobs(){
+    getMyJobs(user: string) {
 
     }
-    createJob(){
+    createJob(data: IJob, user: string) {
 
     }
-    updateJob(){
+    updateJob(data: IJob, _id: string, user: string) {
 
     }
-    deleteJob(){
-        
-    }    
+    deleteJob(_id: string, user: string) {
+
+    }
 }

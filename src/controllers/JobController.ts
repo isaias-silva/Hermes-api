@@ -1,8 +1,10 @@
-import { Context } from "elysia";
+import { Context, NotFoundError } from "elysia";
 import { JobService } from "../services/JobService";
+import { IJob } from "../interfaces/IJob";
 
 type JobContext = Context & {
-    jobService: JobService
+    jobService: JobService,
+    user: string
 }
 
 export class JobController {
@@ -14,20 +16,30 @@ export class JobController {
     }
 
     get(ctx: JobContext) {
-        const { jobService, query } = ctx
+        const { jobService, query, user } = ctx
 
-        return {}
+        return query.id ? jobService.getJob(query.id, user) : jobService.getMyJobs(user)
     }
-    
+
     create(ctx: JobContext) {
-        return {}
+        const { jobService, body, user } = ctx
+        const data = body as IJob
+
+        return jobService.createJob(data, user)
     }
     update(ctx: JobContext) {
-        
-        return {}
+        const { jobService, body, user, query } = ctx
+
+        const data = body as IJob
+
+        return jobService.updateJob(data, user, query.id)
+
     }
     delete(ctx: JobContext) {
-        return {}
+        const { jobService, user, query } = ctx
+
+        return jobService.deleteJob(user, query.id)
+
     }
 
 }
